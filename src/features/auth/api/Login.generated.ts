@@ -4,9 +4,9 @@ import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
-    const res = await fetch("http://localhost:5000/graphql", {
-    method: "POST",
-    ...({"headers":{"Content-Type":"application/json"}}),
+    const res = await fetch('http://localhost:5000/graphql', {
+      method: 'POST',
+      ...{ headers: { 'Content-Type': 'application/json' } },
       body: JSON.stringify({ query, variables }),
     });
 
@@ -19,17 +19,17 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
     }
 
     return json.data;
-  }
+  };
 }
 export type LoginMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
   password: Types.Scalars['String']['input'];
 }>;
 
-
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'Auth', token: string } };
-
-
+export type LoginMutation = {
+  __typename?: 'Mutation';
+  login: { __typename?: 'Auth'; token: string };
+};
 
 export const LoginDocument = `
     mutation Login($email: String!, $password: String!) {
@@ -39,18 +39,24 @@ export const LoginDocument = `
 }
     `;
 
-export const useLoginMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>) => {
-    
-    return useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
-      {
+export const useLoginMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    LoginMutation,
+    TError,
+    LoginMutationVariables,
+    TContext
+  >
+) => {
+  return useMutation<LoginMutation, TError, LoginMutationVariables, TContext>({
     mutationKey: ['Login'],
-    mutationFn: (variables?: LoginMutationVariables) => fetcher<LoginMutation, LoginMutationVariables>(LoginDocument, variables)(),
-    ...options
-  }
-    )};
+    mutationFn: (variables?: LoginMutationVariables) =>
+      fetcher<LoginMutation, LoginMutationVariables>(
+        LoginDocument,
+        variables
+      )(),
+    ...options,
+  });
+};
 
-
-useLoginMutation.fetcher = (variables: LoginMutationVariables) => fetcher<LoginMutation, LoginMutationVariables>(LoginDocument, variables);
+useLoginMutation.fetcher = (variables: LoginMutationVariables) =>
+  fetcher<LoginMutation, LoginMutationVariables>(LoginDocument, variables);

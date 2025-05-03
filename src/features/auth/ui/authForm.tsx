@@ -11,32 +11,30 @@ const AuthForm = () => {
   const { t } = useTranslation('features/auth');
   const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm();
-  const [isLoginForm, setIsLoginForm] = useState(true)
-  const { 
-    onFinishLogin, 
-    onFinishRegister, 
-    isLoginPending, 
-    isRegisterPending 
-  } = useAuthFormFeatures({t, messageApi, form})
-  
+  const [isLoginForm, setIsLoginForm] = useState(true);
+  const { onFinishLogin, onFinishRegister, isLoginPending, isRegisterPending } =
+    useAuthFormFeatures({ t, messageApi, form });
+
   const isPending = isLoginPending || isRegisterPending;
-  
+
   const handleFinish = (values: AuthFormValues) => {
     if (isLoginForm) {
       onFinishLogin(values as LoginMutationVariables & { remember: boolean });
     } else {
-      onFinishRegister(values as RegisterMutationVariables & { remember: boolean });
+      onFinishRegister(
+        values as RegisterMutationVariables & { remember: boolean }
+      );
     }
   };
 
   const toggleFormType = useCallback(() => {
-    setIsLoginForm(prev => !prev);
+    setIsLoginForm((prev) => !prev);
     form.resetFields();
   }, [form]);
   return (
     <>
       {contextHolder}
-      
+
       <Form<AuthFormValues>
         form={form}
         name="auth"
@@ -47,20 +45,19 @@ const AuthForm = () => {
         style={{ maxWidth: 360, minWidth: 300 }}
         onFinish={handleFinish}
       >
-        {!isLoginForm && 
+        {!isLoginForm && (
           <Form.Item
             name="username"
-            rules={[
-              { required: true, message: t("usernameRequiredMessage") }
-            ]}
+            rules={[{ required: true, message: t('usernameRequiredMessage') }]}
           >
             <Input
-            prefix={<UserOutlined />}
-            placeholder={t('username')}
-            disabled={isPending}
-            autoComplete="username"
-          />
-            </Form.Item>}
+              prefix={<UserOutlined />}
+              placeholder={t('username')}
+              disabled={isPending}
+              autoComplete="username"
+            />
+          </Form.Item>
+        )}
         <Form.Item
           name="email"
           rules={[
@@ -88,16 +85,16 @@ const AuthForm = () => {
           />
         </Form.Item>
 
-        {isLoginForm &&
-        <Form.Item>
-          <Flex justify="space-between" align="center">
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox disabled={isPending}>{t('rememberMe')}</Checkbox>
-            </Form.Item>
-            <a href="/forgot-password">{t('forgotPassword')}</a>
-          </Flex>
-        </Form.Item>
-        }
+        {isLoginForm && (
+          <Form.Item>
+            <Flex justify="space-between" align="center">
+              <Form.Item name="remember" valuePropName="checked" noStyle>
+                <Checkbox disabled={isPending}>{t('rememberMe')}</Checkbox>
+              </Form.Item>
+              <a href="/forgot-password">{t('forgotPassword')}</a>
+            </Flex>
+          </Form.Item>
+        )}
 
         <Form.Item>
           <Button
@@ -110,9 +107,10 @@ const AuthForm = () => {
             {isLoginForm ? t('login') : t('register')}
           </Button>
           <div>
-            {t('or')} <a onClick={toggleFormType}>
+            {t('or')}{' '}
+            <a onClick={toggleFormType}>
               {isLoginForm ? t('registerNow') : t('loginNow')}
-              </a>
+            </a>
           </div>
         </Form.Item>
       </Form>

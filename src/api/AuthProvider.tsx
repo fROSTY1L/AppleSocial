@@ -2,7 +2,9 @@ import { ReactNode, useState } from 'react';
 import { AuthContext } from '../features/auth/types';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem('token')
+  );
 
   const setAuthToken = (newToken: string) => {
     localStorage.setItem('token', newToken);

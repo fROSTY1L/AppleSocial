@@ -4,9 +4,9 @@ import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
-    const res = await fetch("http://localhost:5000/graphql", {
-    method: "POST",
-    ...({"headers":{"Content-Type":"application/json"}}),
+    const res = await fetch('http://localhost:5000/graphql', {
+      method: 'POST',
+      ...{ headers: { 'Content-Type': 'application/json' } },
       body: JSON.stringify({ query, variables }),
     });
 
@@ -19,7 +19,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
     }
 
     return json.data;
-  }
+  };
 }
 export type RegisterMutationVariables = Types.Exact<{
   username: Types.Scalars['String']['input'];
@@ -27,10 +27,14 @@ export type RegisterMutationVariables = Types.Exact<{
   password: Types.Scalars['String']['input'];
 }>;
 
-
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'Auth', token: string, user: { __typename?: 'User', id: string } } };
-
-
+export type RegisterMutation = {
+  __typename?: 'Mutation';
+  register: {
+    __typename?: 'Auth';
+    token: string;
+    user: { __typename?: 'User'; id: string };
+  };
+};
 
 export const RegisterDocument = `
     mutation Register($username: String!, $email: String!, $password: String!) {
@@ -43,18 +47,32 @@ export const RegisterDocument = `
 }
     `;
 
-export const useRegisterMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<RegisterMutation, TError, RegisterMutationVariables, TContext>) => {
-    
-    return useMutation<RegisterMutation, TError, RegisterMutationVariables, TContext>(
-      {
+export const useRegisterMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    RegisterMutation,
+    TError,
+    RegisterMutationVariables,
+    TContext
+  >
+) => {
+  return useMutation<
+    RegisterMutation,
+    TError,
+    RegisterMutationVariables,
+    TContext
+  >({
     mutationKey: ['Register'],
-    mutationFn: (variables?: RegisterMutationVariables) => fetcher<RegisterMutation, RegisterMutationVariables>(RegisterDocument, variables)(),
-    ...options
-  }
-    )};
+    mutationFn: (variables?: RegisterMutationVariables) =>
+      fetcher<RegisterMutation, RegisterMutationVariables>(
+        RegisterDocument,
+        variables
+      )(),
+    ...options,
+  });
+};
 
-
-useRegisterMutation.fetcher = (variables: RegisterMutationVariables) => fetcher<RegisterMutation, RegisterMutationVariables>(RegisterDocument, variables);
+useRegisterMutation.fetcher = (variables: RegisterMutationVariables) =>
+  fetcher<RegisterMutation, RegisterMutationVariables>(
+    RegisterDocument,
+    variables
+  );

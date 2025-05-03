@@ -6,11 +6,11 @@ i18n.use(initReactI18next).init({
   lng: 'ru',
   fallbackLng: 'ru',
   interpolation: {
-    escapeValue: false
+    escapeValue: false,
   },
   resources: {
     ru: {
-      "features/auth": AuthTranslation.ru
-    }
-  }
+      'features/auth': AuthTranslation.ru,
+    },
+  },
 });

@@ -4,7 +4,8 @@ const config: CodegenConfig = {
   schema: 'http://localhost:5000/graphql', // Ваш бекенд-эндпоинт
   documents: ['src/**/*.{graphql,ts,tsx}'], // Ищем GraphQL-запросы во всех файлах
   generates: {
-    './src/types/graphql.ts': { // Глобальные типы
+    './src/types/graphql.ts': {
+      // Глобальные типы
       plugins: ['typescript'],
       config: {
         skipTypename: false,
@@ -12,9 +13,9 @@ const config: CodegenConfig = {
         scalars: {
           // Кастомные скалярные типы (пример для даты)
           DateTime: 'string',
-          UUID: 'string'
-        }
-      }
+          UUID: 'string',
+        },
+      },
     },
     './src/': {
       preset: 'near-operation-file',
@@ -22,10 +23,7 @@ const config: CodegenConfig = {
         extension: '.generated.ts',
         baseTypesPath: 'types/graphql.ts', // Путь относительно генерируемых файлов
       },
-      plugins: [
-        'typescript-operations',
-        'typescript-react-query'
-      ],
+      plugins: ['typescript-operations', 'typescript-react-query'],
       config: {
         reactQueryVersion: 5,
         exposeQueryKeys: true,
@@ -35,18 +33,18 @@ const config: CodegenConfig = {
           fetchParams: {
             headers: {
               'Content-Type': 'application/json',
-            }
-          }
+            },
+          },
         },
         // Дополнительные настройки для React Query
         addInfiniteQuery: true,
-        legacyMode: false
-      }
-    }
+        legacyMode: false,
+      },
+    },
   },
   hooks: {
-    afterAllFileWrite: ['prettier --write'] // Форматирование после генерации
-  }
+    afterAllFileWrite: ['prettier --write'], // Форматирование после генерации
+  },
 };
 
 export default config;
