@@ -1,16 +1,16 @@
-import { Layout } from "antd";
-import AuthForm from "../features/auth";
+import { Layout } from 'antd';
+import AuthForm from '../features/auth';
 
 const Auth = () => {
   return (
-    <Layout style={
-        { 
-          height: "100vh",
-          justifyContent: "center",
-          alignItems: "center",
-        }
-      }>
-        <AuthForm />
+    <Layout
+      style={{
+        height: '100vh',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <AuthForm />
     </Layout>
   );
 };

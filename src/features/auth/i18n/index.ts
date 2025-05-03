@@ -1,5 +1,5 @@
-import { ru } from "./ru"
+import { ru } from './ru';
 
 export const AuthTranslation = {
-    ru: ru,
-}
+  ru: ru,
+};

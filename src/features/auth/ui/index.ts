@@ -1,1 +1,1 @@
-export { default } from "./authForm";
+export { default } from './authForm';

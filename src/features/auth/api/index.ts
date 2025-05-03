@@ -1,2 +1,2 @@
-export * from "./Login.generated";
-export * from "./Register.generated";
+export * from './Login.generated';
+export * from './Register.generated';
